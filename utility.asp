@@ -27,6 +27,27 @@ Function Push(ByRef arrayIn, varElement)
    Push = UBound(arrayIn)
 End Function
 
+function camelToProper(str)
+    dim a, b, i, tmp, added
+    a = str
+    b = lcase(a)
+    tmp = a
+
+    added = 0
+    for i = 1 to len(a)
+        if mid(a,i,1) <> mid(b,i,1) and i > 1 then
+            tmp = left(tmp,i - 1 + added)  & " " & right(tmp,len(tmp) - i + 1 - added)
+            added = added + 1
+        end if
+    next
+    tmp = ucfirst(tmp)
+    camelToProper = tmp
+end function
+
+function ucfirst(str)
+    ucfirst = ucase(left(str,1)) & right(str,len(str) - 1)
+end function
+
 function cleanSQL(val)
   temp = replace(val,";","")
   temp = replace(temp,"--","")
