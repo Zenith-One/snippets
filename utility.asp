@@ -27,6 +27,36 @@ Function Push(ByRef arrayIn, varElement)
    Push = UBound(arrayIn)
 End Function
 
+function stripTags(str)
+    dim openPos, closePos, tmp, before, after
+    tmp = str
+    'get first <'
+    openPos  = instr(tmp,"<")
+    if openPos = 0 then
+        stripTags = tmp
+        exit function
+    else 
+        closePos = instr(openPos,tmp,">")
+    end if
+    if closePos = 0 then
+        stripTags = tmp
+        exit function
+    end if
+    'echo openPos & " " & closePos
+    if openPos > 1 then
+        before =  left(tmp, openPos  - 1)
+    else
+        before = ""
+    end if
+    if closePos < len(tmp) then
+        after  = right(tmp, (len(tmp) - closePos))
+    else
+        after = ""
+    end if
+    stripTags = trim(stripTags(before & " " & after))
+    'stripTags = trim(before & " " & after)
+end function
+
 function camelToProper(str)
     dim a, b, i, tmp, added
     a = str
